@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Debts</string>
+    <string name="name">Кому должен?</string>
+    <string name="hname">Имя</string>
+    <string name="hdebt">Долг</string>
+    <string name="debt">Сколько должен?</string>
+    <string name="debts">Долги</string>
+    <string name="currency">Валюта</string>
+    <string name="Add">Добавить</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
+</resources>

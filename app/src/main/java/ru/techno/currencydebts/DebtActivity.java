@@ -42,8 +42,8 @@ public class DebtActivity extends Activity {
     @SuppressLint("LongLogTag")
     public void onAddClick(View v) {
         sName = ETName.getText().toString();
-        dDebt = Double.parseDouble(ETDebt.getText().toString());
-        if (!sName.equals("") && !(dDebt + "").equals("") && iPos != -1) {
+        if (!sName.equals("") && !ETDebt.getText().toString().equals("") && iPos != -1) {
+            dDebt = Double.parseDouble(ETDebt.getText().toString());
             SQLiteDatabase db = MainActivity.myDatabase.getWritableDatabase();
             if (bAction) {
                 MyDatabase.replace(db, iID, sName, dDebt, sCurrencySymbols[iPos]);

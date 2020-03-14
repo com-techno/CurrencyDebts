@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ public class DebtActivity extends Activity {
 
     EditText ETName, ETDebt;
     Spinner spinnerCurrency;
+    RadioGroup radioGroup;
 
     //From recycler for editing
     String sName;
@@ -39,9 +43,10 @@ public class DebtActivity extends Activity {
         bindAdapterToSpinnerCurrency();
     }
 
-    @SuppressLint("LongLogTag")
+    @SuppressLint({"LongLogTag", "ResourceType"})
     public void onAddClick(View v) {
         sName = ETName.getText().toString();
+        Log.i("lol", String.valueOf(radioGroup.getCheckedRadioButtonId()));
         if (!sName.equals("") && !ETDebt.getText().toString().equals("") && iPos != -1) {
             dDebt = Double.parseDouble(ETDebt.getText().toString());
             SQLiteDatabase db = MainActivity.myDatabase.getWritableDatabase();
@@ -58,11 +63,19 @@ public class DebtActivity extends Activity {
         } else Toast.makeText(this, "Заполните поля!", Toast.LENGTH_LONG).show();
     }
 
+    public void onRadioClick(View v){
+        switch (v.getId()){
+            case R.id.rbme: ETName.setHint("Кто должен?"); break;
+            case R.id.rbi: ETName.setHint("Кому должен?"); break;
+        }
+    }
+
     private void bindViews(){
         setContentView(R.layout.add);
         ETName = findViewById(R.id.addName);
         ETDebt = findViewById(R.id.addDebt);
         spinnerCurrency = findViewById(R.id.currencySpinner);
+        radioGroup = findViewById(R.id.rg);
     }
 
     private void getFromArguments(){

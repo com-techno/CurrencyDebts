@@ -29,12 +29,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
             style="@style/FieldStyle"
+            android:id="@+id/llname"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:orientation="vertical"
             tools:ignore="NestedWeights">
 
@@ -49,22 +47,16 @@
 
             <EditText
                 android:id="@+id/addName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                style="@style/ETFieldStyle"
                 android:ems="10"
                 android:hint="@string/name"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName"
-                android:textColor="#fff"
-                android:textColorHint="#A7A7A7" />
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FieldStyle"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/corner"
             android:orientation="vertical">
@@ -80,40 +72,86 @@
 
             <EditText
                 android:id="@+id/addDebt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                style="@style/ETFieldStyle"
                 android:ems="10"
                 android:hint="@string/debt"
                 android:importantForAutofill="no"
-                android:inputType="numberDecimal"
-                android:textColor="#fff"
-                android:textColorHint="#A7A7A7" />
+                android:inputType="numberDecimal" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FieldStyle"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/corner"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             tools:ignore="NestedWeights">
 
-            <TextView
-                android:id="@+id/hCurrency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/currency"
-                android:textColor="#fff"
-                android:textSize="25sp" />
-
-            <Spinner
-                android:id="@+id/currencySpinner"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/hChose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0"
+                    android:text="@string/hChose"
+                    android:textColor="#fff"
+                    android:textSize="25sp" />
+
+                <RadioGroup
+                    android:id="@+id/rg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0">
+
+                    <RadioButton
+                        android:id="@+id/rbme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorWhiteDark"
+                        android:text="Должны мне"
+                        android:onClick="onRadioClick"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorWhiteDark"
+                        android:text="Я должен"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="20sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/hCurrency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/currency"
+                    android:textColor="#fff"
+                    android:textSize="25sp" />
+
+                <Spinner
+                    android:id="@+id/currencySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -129,7 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
+            android:layout_margin="10dp"
             android:background="@drawable/corner"
             android:onClick="onAddClick"
             android:text="@string/Add"

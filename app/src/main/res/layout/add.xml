@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/debts"
-            android:textColor="#fff"
+            android:textColor="@color/colorWhite"
             android:textSize="40sp" />
 
     </FrameLayout>
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="@string/hname"
-                android:textColor="#fff"
+                android:textColor="@color/colorWhite"
                 android:textSize="25sp" />
 
             <EditText
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="@string/hdebt"
-                android:textColor="#fff"
+                android:textColor="@color/colorWhite"
                 android:textSize="25sp" />
 
             <EditText
@@ -100,7 +100,7 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0"
                     android:text="@string/hChose"
-                    android:textColor="#fff"
+                    android:textColor="@color/colorWhite"
                     android:textSize="25sp" />
 
                 <RadioGroup
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="@string/currency"
-                    android:textColor="#fff"
+                    android:textColor="@color/colorWhite"
                     android:textSize="25sp" />
 
                 <Spinner
@@ -171,7 +171,7 @@
             android:background="@drawable/corner"
             android:onClick="onAddClick"
             android:text="@string/Add"
-            android:textColor="#fff" />
+            android:textColor="@color/colorWhite" />
     </FrameLayout>
 
 </LinearLayout>

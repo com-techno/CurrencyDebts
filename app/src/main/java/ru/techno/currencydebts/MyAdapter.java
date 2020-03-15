@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -46,6 +49,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     void update() {
         ALInformation.clear();
         readDatabase();
+    }
+
+    void sort(final int iSortBy){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            ALInformation.sort(new Comparator<Information>() {
+                @Override
+                public int compare(Information o1, Information o2) {
+                    switch (iSortBy) {
+                        case 0: return o1.sName.compareToIgnoreCase(o2.sName);
+                        case 1: return o2.sName.compareToIgnoreCase(o1.sName);
+                        case 2: return Double.compare(o1.dDebt, o2.dDebt);
+                        case 3: return Double.compare(o2.dDebt, o1.dDebt);
+                        default: return Integer.compare(o1.iID, o2.iID);
+                    }
+                }
+            });
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull

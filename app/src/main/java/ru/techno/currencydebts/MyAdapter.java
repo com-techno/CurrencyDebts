@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,17 +28,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private MyDatabase myDatabase;
     private ArrayList<Information> ALInformation = new ArrayList<>();
 
-    private static class Information{
+    private static class Information {
         String sName;
         double dDebt;
         int iID;
         String sCurrency;
+        int iChose;
 
-        public Information(String sName, Double dDebt, Integer iID, String sCurrency) {
+        public Information(String sName, Double dDebt, Integer iID, String sCurrency, int iChose) {
             this.sName = sName;
             this.dDebt = dDebt;
             this.iID = iID;
             this.sCurrency = sCurrency;
+            this.iChose = iChose;
         }
     }
 
@@ -51,17 +54,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         readDatabase();
     }
 
-    void sort(final int iSortBy){
+    void sort(final int iSortBy) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             ALInformation.sort(new Comparator<Information>() {
                 @Override
                 public int compare(Information o1, Information o2) {
                     switch (iSortBy) {
-                        case 0: return o1.sName.compareToIgnoreCase(o2.sName);
-                        case 1: return o2.sName.compareToIgnoreCase(o1.sName);
-                        case 2: return Double.compare(o1.dDebt, o2.dDebt);
-                        case 3: return Double.compare(o2.dDebt, o1.dDebt);
-                        default: return Integer.compare(o1.iID, o2.iID);
+                        case 0:
+                            return o1.sName.compareToIgnoreCase(o2.sName);
+                        case 1:
+                            return o2.sName.compareToIgnoreCase(o1.sName);
+                        case 2:
+                            return Double.compare(o1.dDebt, o2.dDebt);
+                        case 3:
+                            return Double.compare(o2.dDebt, o1.dDebt);
+                        default:
+                            return Integer.compare(o1.iID, o2.iID);
                     }
                 }
             });
@@ -82,6 +90,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.TWName.setText(info.sName);
         holder.TWDebt.setText(info.sCurrency + info.dDebt);
         holder.TWID.setText(String.valueOf(info.iID));
+        holder.RLItem.setBackgroundResource(info.iChose == 0 ? R.drawable.corner_red : R.drawable.corner_green);
     }
 
     @Override
@@ -123,14 +132,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     String fromDBsName = null;
                     double fromDBdDebt = 0;
                     int fromDBiCurrency = 0;
+                    int fromDBiChose = 0;
                     if (cursor.moveToFirst())
                         do {
                             fromDBsName = cursor.getString(cursor.getColumnIndex(MyDatabase.COL_NAME));
                             fromDBdDebt = cursor.getDouble(cursor.getColumnIndex(MyDatabase.COL_SUM));
                             fromDBiCurrency = cursor.getInt(cursor.getColumnIndex(MyDatabase.COL_CURRENCY));
+                            fromDBiChose = cursor.getInt(cursor.getColumnIndex(MyDatabase.COL_CHOSE));
                         } while (cursor.moveToNext());
                     cursor.close();
-                    putExtraToIntent(intent, fromDBsName, fromDBdDebt, fromDBiCurrency);
+                    putExtraToIntent(intent, fromDBsName, fromDBdDebt, fromDBiCurrency, fromDBiChose);
                     v.getContext().startActivity(intent);
                 }
             });
@@ -145,16 +156,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             BDelete = itemView.findViewById(R.id.delete_button);
         }
 
-        private void putExtraToIntent(Intent intent, String fromDBName, double fromDBDebt, int fromDBCurrency) {
+        private void putExtraToIntent(Intent intent, String fromDBName, double fromDBDebt, int fromDBCurrency, int fromDBChose) {
             intent.putExtra("flag", true);
             intent.putExtra("id", Integer.parseInt(TWID.getText().toString()));
             intent.putExtra("name", fromDBName);
             intent.putExtra("debt", fromDBDebt);
             intent.putExtra("currency", fromDBCurrency);
+            intent.putExtra("chose", fromDBChose);
         }
     }
 
-    private void readDatabase(){
+    private void readDatabase() {
         SQLiteDatabase database = myDatabase.getReadableDatabase();
         Cursor cursor = database.query(MyDatabase.TB_NAME, null, null, null, null, null, null);
         if (cursor.moveToFirst())
@@ -163,7 +175,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                         cursor.getString(cursor.getColumnIndex(MyDatabase.COL_NAME)),
                         cursor.getDouble(cursor.getColumnIndex(MyDatabase.COL_SUM)),
                         cursor.getInt(cursor.getColumnIndex(MyDatabase.COL_ID)),
-                        cursor.getString(cursor.getColumnIndex(MyDatabase.COL_CURRENCY))));
+                        cursor.getString(cursor.getColumnIndex(MyDatabase.COL_CURRENCY)),
+                        cursor.getInt(cursor.getColumnIndex(MyDatabase.COL_CHOSE))
+                ));
             } while (cursor.moveToNext());
 
         cursor.close();

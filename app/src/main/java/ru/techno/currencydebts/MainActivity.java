@@ -1,14 +1,12 @@
 package ru.techno.currencydebts;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,13 +25,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         spinnerSorting = findViewById(R.id.spinnerSorting);
         myAdapter = new MyAdapter(this);
 
-
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(myAdapter);
         myAdapter.update();
         myDatabase = new MyDatabase(this);
-        bindAdapterToSpinnerCurrency();
+        bindAdapterToSpinnerChose();
     }
 
     @Override
@@ -43,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    private void bindAdapterToSpinnerCurrency(){
+    private void bindAdapterToSpinnerChose() {
         String[] sSortingVariables = {"Имени↓", "Имени↑", "Долгу↓", "Долгу↑", "По ID"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.curr, R.id.currencyText, sSortingVariables);
         adapter.setDropDownViewResource(R.layout.curr);

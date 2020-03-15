@@ -47,14 +47,15 @@ public class DebtActivity extends Activity {
     public void onAddClick(View v) {
         sName = ETName.getText().toString();
         Log.i("lol", String.valueOf(radioGroup.getCheckedRadioButtonId()));
-        if (!sName.equals("") && !ETDebt.getText().toString().equals("") && iPos != -1) {
+        if (!sName.equals("") && !ETDebt.getText().toString().equals("") && (iPos != -1) && (radioGroup.getCheckedRadioButtonId() !=-1)){
             dDebt = Double.parseDouble(ETDebt.getText().toString());
             SQLiteDatabase db = MainActivity.myDatabase.getWritableDatabase();
+
             if (bAction) {
-                MyDatabase.replace(db, iID, sName, dDebt, sCurrencySymbols[iPos]);
+                MyDatabase.replace(db, iID, sName, dDebt, sCurrencySymbols[iPos], radioGroup.getCheckedRadioButtonId() == R.id.rbi ? 0 : 1);
                 Log.i("ru.techno.currencydebts/Database", "edited with id = " + iID);
             } else {
-                MyDatabase.put(db, sName, dDebt, sCurrencySymbols[iPos]);
+                MyDatabase.put(db, sName, dDebt, sCurrencySymbols[iPos], radioGroup.getCheckedRadioButtonId() == R.id.rbi ? 0 : 1);
                 Log.i("ru.techno.currencydebts/Database", "added");
             }
 
